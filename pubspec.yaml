@@ -38,6 +38,7 @@ dependencies:
   badges: ^2.0.3
   http: ^0.13.4
   shared_preferences: ^2.0.13
+  url_launcher: ^6.0.20
 
 dev_dependencies:
   flutter_test:

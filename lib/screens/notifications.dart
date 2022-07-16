@@ -18,7 +18,7 @@ class _NotificationsState extends State<Notifications> {
     return Scaffold(
       backgroundColor: Color(CommonColors.SECONDRY_COLOR),
       appBar: AppBar(elevation: 0,centerTitle:true,backgroundColor: Color(CommonColors.PRIMARY_COLOR),title: Text("Notifiche",
-          style: TextStyle(fontSize: 25, color: Color(CommonColors.SECONDRY_COLOR))),),
+          style: TextStyle(fontSize: 25, color: Colors.white)),),
       body: Padding(
           padding: const EdgeInsets.all(10.0),
           child: FutureBuilder(
@@ -43,7 +43,7 @@ class _NotificationsState extends State<Notifications> {
                           children: [
                             Text(snapshot.data[index].title,
                                 style: TextStyle(
-                                    color: Color(CommonColors.SECONDRY_COLOR),
+                                    color: Colors.white,
                                     fontSize: 20,
                                     fontWeight: FontWeight.w500),
                                 textAlign: TextAlign.left),
