@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1062689372459",
+    "project_id": "app-congresso",
+    "storage_bucket": "app-congresso.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1062689372459:android:fe88e73709999befa4ad6e",
+        "android_client_info": {
+          "package_name": "com.congresso.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1062689372459-56bjo0ptrinsnc26h62vgmnso6anpvko.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA0CmAgeOzbn8faPxIjO5QXDaPAx7OpR_I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1062689372459-56bjo0ptrinsnc26h62vgmnso6anpvko.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

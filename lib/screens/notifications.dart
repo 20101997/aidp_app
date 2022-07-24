@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 import '../constants/colors.dart';
@@ -12,13 +11,17 @@ class Notifications extends StatefulWidget {
 }
 
 class _NotificationsState extends State<Notifications> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(CommonColors.SECONDRY_COLOR),
-      appBar: AppBar(elevation: 0,centerTitle:true,backgroundColor: Color(CommonColors.PRIMARY_COLOR),title: Text("Notifiche",
-          style: TextStyle(fontSize: 25, color: Colors.white)),),
+      appBar: AppBar(
+        elevation: 0,
+        centerTitle: true,
+        backgroundColor: Color(CommonColors.PRIMARY_COLOR),
+        title: Text("Notifiche",
+            style: TextStyle(fontSize: 25, color: Colors.white)),
+      ),
       body: Padding(
           padding: const EdgeInsets.all(10.0),
           child: FutureBuilder(
@@ -33,9 +36,9 @@ class _NotificationsState extends State<Notifications> {
                   itemBuilder: (BuildContext context, int index) {
                     return Container(
                       decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5),
-                          color: Color(CommonColors.PRIMARY_COLOR),
-                        ),
+                        borderRadius: BorderRadius.circular(5),
+                        color: Color(CommonColors.PRIMARY_COLOR),
+                      ),
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Column(
@@ -64,10 +67,12 @@ class _NotificationsState extends State<Notifications> {
                     );
                   },
                   separatorBuilder: (BuildContext context, int index) =>
-                  const Divider(),
+                      const Divider(),
                 );
               } else {
-                return const Center(child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(Colors.red)));
+                return const Center(
+                    child: CircularProgressIndicator(
+                        valueColor: AlwaysStoppedAnimation<Color>(Colors.red)));
               }
             },
           )),

@@ -1,4 +1,4 @@
-package com.example.aidp_app
+package com.congresso.app
 
 import io.flutter.embedding.android.FlutterActivity
 

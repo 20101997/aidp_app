@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.aidp_app">
+    package="com.congresso.app">
    <application
-        android:label="aidp_app"
+        android:label="CONGRESSO NAZIONALE AIDP"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
