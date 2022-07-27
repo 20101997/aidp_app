@@ -56,7 +56,7 @@ class MyApp extends StatelessWidget {
           appBarTheme: AppBarTheme(
         color: Color(CommonColors.PRIMARY_COLOR),
       )),
-      title: 'Aidp App',
+      title: 'CONGRESSO NAZIONALE AIDP',
       debugShowCheckedModeBanner: false,
       home: const HomePage(),
     );
