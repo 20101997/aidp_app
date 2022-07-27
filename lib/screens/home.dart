@@ -22,6 +22,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   bool openDrawer = false;
   Color drawerIcon = Colors.white;
+  Color notificationIcon = Colors.white;
   String webUrl = BASE_URL;
   List<WebPage> webPages = [
     WebPage(name: "HOME", link: BASE_URL),
@@ -73,7 +74,22 @@ class _HomePageState extends State<HomePage> {
               : setState(() => drawerIcon = Colors.white);
           ;
         },
+        onEndDrawerChanged: (isOpened) {
+          isOpened
+              ? setState(() => notificationIcon = Color(CommonColors.SECONDRY_COLOR))
+              : setState(() => notificationIcon = Colors.white);
+          ;
+        },
         drawerScrimColor: Colors.transparent,
+        endDrawer: Padding(
+          padding: EdgeInsets.fromLTRB(0, 80, 0,0),
+          child: Drawer(
+            elevation: 0,
+            width: MediaQuery.of(context).size.width,
+            backgroundColor: Color(CommonColors.PRIMARY_COLOR),
+            child: NotificationsPage()
+          ),
+        ),
         drawer: Padding(
           padding: EdgeInsets.fromLTRB(
               0, 80, 0, MediaQuery.of(context).size.height / 4),
@@ -108,7 +124,7 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
         ),
-        drawerEdgeDragWidth: 30,
+      //  drawerEdgeDragWidth: 30,
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(75.0), // here the desired height
           child: AppBar(
@@ -126,13 +142,21 @@ class _HomePageState extends State<HomePage> {
             }),
             actions: <Widget>[
               new Stack(children: <Widget>[
-                IconButton(
-                  onPressed: () {},
-                  icon: Icon(
-                    Icons.notifications,
-                    size: 35,
-                  ),
+                Builder(
+                  builder: (context) {
+                    return IconButton(
+                      onPressed: () {
+                        Scaffold.of(context).openEndDrawer();
+                      },
+                      icon: Icon(
+                        Icons.notifications,
+                        size: 35,
+                        color: notificationIcon,
+                      ),
+                    );
+                  }
                 ),
+
                 new Positioned(
                   top: 10,
                   right: 5,
@@ -179,3 +203,5 @@ class _HomePageState extends State<HomePage> {
         ));
   }
 }
+
+
