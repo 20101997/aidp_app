@@ -13,26 +13,33 @@ import '../widgets/banner.dart';
 import '../widgets/snackbar.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+  SharedPreferences prefs;
+  HomePage({Key? key, required this.prefs}) : super(key: key);
 
   @override
   State<HomePage> createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
+  late WebViewController controller;
   bool openDrawer = false;
   Color drawerIcon = Colors.white;
   Color notificationIcon = Colors.white;
   String webUrl = BASE_URL;
   List<WebPage> webPages = [
     WebPage(name: "HOME", link: BASE_URL),
-    WebPage(name: "AGENDA", link: BASE_URL+"lagenda.php"),
-    WebPage(name: "PROTAGONISTI", link: BASE_URL+"i-protagonisti.php"),
-    WebPage(name: "LOCATION & ACCOMODATION", link: BASE_URL+"la-location.php"),
-    WebPage(name: "TAPPE PRE CONGRESSUALI", link: BASE_URL+"tappe-pre-congressuali.php"),
-    WebPage(name: "PROGRAMMA ACCOMPAGNATORI", link: BASE_URL+"programma-accompagnatori.php"),
-    WebPage(name: "PARTNER", link: BASE_URL+"partner/"),
-    WebPage(name: "MEDIA WALL", link: BASE_URL+"media-wall.php"),
+    WebPage(name: "AGENDA", link: BASE_URL + "lagenda.php"),
+    WebPage(name: "PROTAGONISTI", link: BASE_URL + "i-protagonisti.php"),
+    WebPage(
+        name: "LOCATION & ACCOMODATION", link: BASE_URL + "la-location.php"),
+    WebPage(
+        name: "TAPPE PRE CONGRESSUALI",
+        link: BASE_URL + "tappe-pre-congressuali.php"),
+    WebPage(
+        name: "PROGRAMMA ACCOMPAGNATORI",
+        link: BASE_URL + "programma-accompagnatori.php"),
+    WebPage(name: "PARTNER", link: BASE_URL + "/index-2022.php#slide7"),
+    WebPage(name: "MEDIA WALL", link: BASE_URL + "media-wall.php"),
   ];
 
   ShowBanners() async {
@@ -76,19 +83,21 @@ class _HomePageState extends State<HomePage> {
         },
         onEndDrawerChanged: (isOpened) {
           isOpened
-              ? setState(() => notificationIcon = Color(CommonColors.SECONDRY_COLOR))
+              ? setState(() {
+                  notificationIcon = Color(CommonColors.SECONDRY_COLOR);
+                  widget.prefs.setInt("total_receive_notifications", 0);
+                })
               : setState(() => notificationIcon = Colors.white);
           ;
         },
         drawerScrimColor: Colors.transparent,
         endDrawer: Padding(
-          padding: EdgeInsets.fromLTRB(0, 80, 0,0),
+          padding: EdgeInsets.fromLTRB(0, 80, 0, 0),
           child: Drawer(
-            elevation: 0,
-            width: MediaQuery.of(context).size.width,
-            backgroundColor: Color(CommonColors.PRIMARY_COLOR),
-            child: NotificationsPage()
-          ),
+              elevation: 0,
+              width: MediaQuery.of(context).size.width,
+              backgroundColor: Color(CommonColors.PRIMARY_COLOR),
+              child: NotificationsPage()),
         ),
         drawer: Padding(
           padding: EdgeInsets.fromLTRB(
@@ -101,21 +110,22 @@ class _HomePageState extends State<HomePage> {
               itemCount: webPages.length,
               itemBuilder: (context, i) {
                 return ListTile(
-                  onTap: () {
-
-                    setState(() {
-                      webUrl = webPages[i].link;
-                    });
-                    Scaffold.of(context).closeDrawer();
-
-                  },
+                    onTap: () {
+                      setState(() {
+                        controller.loadUrl(webPages[i].link);
+                        webUrl = webPages[i].link;
+                      });
+                      Scaffold.of(context).closeDrawer();
+                    },
                     title: Text(
-                  webPages[i].name,
-                  style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: webPages[i].link==webUrl ? Colors.white :Color(CommonColors.SECONDRY_COLOR)),
-                ));
+                      webPages[i].name,
+                      style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: webPages[i].link == webUrl
+                              ? Colors.white
+                              : Color(CommonColors.SECONDRY_COLOR)),
+                    ));
               },
               separatorBuilder: (context, index) => Divider(
                 height: 3,
@@ -124,7 +134,7 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
         ),
-      //  drawerEdgeDragWidth: 30,
+        //  drawerEdgeDragWidth: 30,
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(75.0), // here the desired height
           child: AppBar(
@@ -142,44 +152,46 @@ class _HomePageState extends State<HomePage> {
             }),
             actions: <Widget>[
               new Stack(children: <Widget>[
-                Builder(
-                  builder: (context) {
-                    return IconButton(
-                      onPressed: () {
-                        Scaffold.of(context).openEndDrawer();
-                      },
-                      icon: Icon(
-                        Icons.notifications,
-                        size: 35,
-                        color: notificationIcon,
+                Builder(builder: (context) {
+                  return IconButton(
+                    onPressed: () {
+                      Scaffold.of(context).openEndDrawer();
+                    },
+                    icon: Icon(
+                      Icons.notifications,
+                      size: 35,
+                      color: notificationIcon,
+                    ),
+                  );
+                }),
+                if (widget.prefs.getInt("total_receive_notifications") !=
+                        null &&
+                    widget.prefs.getInt("total_receive_notifications") != 0)
+                  new Positioned(
+                    top: 10,
+                    right: 5,
+                    child: new Container(
+                      padding: EdgeInsets.all(1),
+                      decoration: new BoxDecoration(
+                        color: Colors.red,
+                        borderRadius: BorderRadius.circular(8),
                       ),
-                    );
-                  }
-                ),
-
-                new Positioned(
-                  top: 10,
-                  right: 5,
-                  child: new Container(
-                    padding: EdgeInsets.all(1),
-                    decoration: new BoxDecoration(
-                      color: Colors.red,
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    constraints: BoxConstraints(
-                      minWidth: 16,
-                      minHeight: 16,
-                    ),
-                    child: new Text(
-                      '+9',
-                      style: new TextStyle(
-                        color: Colors.white,
-                        fontSize: 14,
+                      constraints: BoxConstraints(
+                        minWidth: 16,
+                        minHeight: 16,
                       ),
-                      textAlign: TextAlign.center,
+                      child: new Text(
+                        widget.prefs
+                            .getInt("total_receive_notifications")
+                            .toString(),
+                        style: new TextStyle(
+                          color: Colors.white,
+                          fontSize: 14,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
                     ),
-                  ),
-                )
+                  )
               ])
             ],
             title: Container(
@@ -197,11 +209,11 @@ class _HomePageState extends State<HomePage> {
         ),
         body: Scaffold(
           body: WebView(
-            initialUrl: webUrl,
-            javascriptMode: JavascriptMode.unrestricted,
-          ),
+              initialUrl: webUrl,
+              javascriptMode: JavascriptMode.unrestricted,
+              onWebViewCreated: (WebViewController webViewController) {
+                controller = webViewController;
+              }),
         ));
   }
 }
-
-

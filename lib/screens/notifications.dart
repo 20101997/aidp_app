@@ -26,7 +26,8 @@ class NotificationsPage extends StatelessWidget {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(5),
                       color: Color(CommonColors.PRIMARY_COLOR),
-                      border: Border.all(color: Color(CommonColors.SECONDRY_COLOR), width: 1),
+                      border: Border.all(
+                          color: Color(CommonColors.SECONDRY_COLOR), width: 1),
                     ),
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
@@ -56,12 +57,13 @@ class NotificationsPage extends StatelessWidget {
                   );
                 },
                 separatorBuilder: (BuildContext context, int index) =>
-                const Divider(),
+                    const Divider(),
               );
             } else {
               return const Center(
                   child: CircularProgressIndicator(
-                      valueColor: AlwaysStoppedAnimation<Color>(Colors.orange)));
+                      valueColor:
+                          AlwaysStoppedAnimation<Color>(Colors.orange)));
             }
           },
         ));
