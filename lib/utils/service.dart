@@ -49,7 +49,7 @@ class Service {
       Iterable list = json.decode(response.body);
       List<NotificationItem> notifications = List<NotificationItem>.from(
           list.map((model) => NotificationItem.fromJson(model)));
-      return notifications;
+      return List.from(notifications.reversed);
     } else {
       throw Exception('Failed');
     }

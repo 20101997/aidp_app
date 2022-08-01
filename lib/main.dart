@@ -1,16 +1,29 @@
+import 'dart:io';
+
 import 'package:aidp_app/constants/colors.dart';
 import 'package:aidp_app/screens/home.dart';
 import 'package:aidp_app/utils/service.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app_badger/flutter_app_badger.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:shared_preferences_android/shared_preferences_android.dart';
+import 'package:shared_preferences_ios/shared_preferences_ios.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   // If you're going to use other Firebase services in the background, such as Firestore,
   // make sure you call `initializeApp` before using other Firebase services.
   await Firebase.initializeApp();
+  print("notification received");
+  if (Platform.isAndroid) SharedPreferencesAndroid.registerWith();
+  if (Platform.isIOS) SharedPreferencesIOS.registerWith();
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  var a = prefs.getInt("total_receive_notifications");
+  print(a);
+  prefs.setInt("total_receive_notifications",
+      prefs.getInt('total_receive_notifications')! + 1);
   flutterLocalNotificationsPlugin.show(
     message.data.hashCode,
     message.data['title'],
@@ -80,6 +93,10 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     Service.subscribeTonotifications();
 
+    void _addBadge() {
+      FlutterAppBadger.updateBadgeCount(1);
+    }
+
     var initializationSettingsAndroid =
         const AndroidInitializationSettings('@mipmap/ic_launcher');
     var initializationSettings =
@@ -90,18 +107,13 @@ class _MyAppState extends State<MyApp> {
       RemoteNotification? notification = message.notification;
       AndroidNotification? android = message.notification?.android;
       if (notification != null && android != null) {
-        /*       print("notification received");
+        print("notification received");
         var a = widget.prefs.getInt("total_receive_notifications");
-        var b = widget.prefs.getInt("total_receive_notificationssss");
         print(a);
-        print(b);
-        if (widget.prefs.getInt('notification_token') == null) {
-          widget.prefs.setInt("total_receive_notifications", 1);
-        } else {
-          widget.prefs.setInt("total_receive_notifications",
-              widget.prefs.getInt('notification_token')! + 1);
-        }*/
-
+        widget.prefs.setInt("total_receive_notifications",
+            widget.prefs.getInt('total_receive_notifications')! + 1);
+        _addBadge();
+        print(widget.prefs.getInt("total_receive_notifications"));
         flutterLocalNotificationsPlugin.show(
           message.data.hashCode,
           message.data['title'],
@@ -117,6 +129,7 @@ class _MyAppState extends State<MyApp> {
             ),
           ),
         );
+
       }
     });
     super.initState();

@@ -60,10 +60,10 @@ class NotificationsPage extends StatelessWidget {
                     const Divider(),
               );
             } else {
-              return const Center(
+              return Center(
                   child: CircularProgressIndicator(
                       valueColor:
-                          AlwaysStoppedAnimation<Color>(Colors.orange)));
+                          AlwaysStoppedAnimation<Color>(Color(CommonColors.SECONDRY_COLOR))));
             }
           },
         ));

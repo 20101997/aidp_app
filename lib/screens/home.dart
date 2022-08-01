@@ -1,9 +1,8 @@
 import 'package:aidp_app/screens/notifications.dart';
-import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app_badger/flutter_app_badger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:webview_flutter/webview_flutter.dart';
-
 import '../constants/colors.dart';
 import '../constants/url.dart';
 import '../models/webPage.dart';
@@ -72,6 +71,10 @@ class _HomePageState extends State<HomePage> {
     super.initState();
   }
 
+  void _removeBadge() {
+    FlutterAppBadger.removeBadge();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -86,6 +89,7 @@ class _HomePageState extends State<HomePage> {
               ? setState(() {
                   notificationIcon = Color(CommonColors.SECONDRY_COLOR);
                   widget.prefs.setInt("total_receive_notifications", 0);
+                  _removeBadge();
                 })
               : setState(() => notificationIcon = Colors.white);
           ;
