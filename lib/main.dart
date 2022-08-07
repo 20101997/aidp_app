@@ -3,14 +3,18 @@ import 'dart:io';
 import 'package:aidp_app/constants/colors.dart';
 import 'package:aidp_app/screens/home.dart';
 import 'package:aidp_app/utils/service.dart';
+import 'package:aidp_app/widgets/snackbar.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app_badger/flutter_app_badger.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shared_preferences_android/shared_preferences_android.dart';
 import 'package:shared_preferences_ios/shared_preferences_ios.dart';
+
+import 'models/notificationTotal.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   // If you're going to use other Firebase services in the background, such as Firestore,
@@ -76,7 +80,13 @@ void main() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   prefs.remove('ad_displayed');
   prefs.remove('news_displayed');
-  runApp(MyApp(prefs: prefs));
+  runApp(ChangeNotifierProvider<NotificationsTotal>(
+    create: (BuildContext context) {
+      return NotificationsTotal(
+          total: prefs.getInt("total_receive_notifications") ?? 0);
+    },
+    child: MyApp(prefs: prefs),
+  ));
 }
 
 // notification: https://www.youtube.com/watch?v=MBFjk6KfrEE&ab_channel=EasyCodingwithAmmara
@@ -88,14 +98,37 @@ class MyApp extends StatefulWidget {
   State<MyApp> createState() => _MyAppState();
 }
 
-class _MyAppState extends State<MyApp> {
+class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
+  /* @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    switch (state) {
+      case AppLifecycleState.resumed:
+        setState(() {
+        });
+       // Provider.of<NotificationsTotal>(context, listen: false).setTotal(10);
+        print(widget.prefs.getInt("total_receive_notifications"));
+        print('app resumed');
+        break;
+      case AppLifecycleState.inactive:
+        print('app inactive');
+        break;
+      case AppLifecycleState.paused:
+        print('app paused');
+        break;
+      case AppLifecycleState.detached:
+        print('app detached');
+        break;
+    }
+  }
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }*/
   @override
   void initState() {
+    WidgetsBinding.instance.addObserver(this);
     Service.subscribeTonotifications();
-
-    void _addBadge() {
-      FlutterAppBadger.updateBadgeCount(1);
-    }
 
     var initializationSettingsAndroid =
         const AndroidInitializationSettings('@mipmap/ic_launcher');
@@ -107,12 +140,14 @@ class _MyAppState extends State<MyApp> {
       RemoteNotification? notification = message.notification;
       AndroidNotification? android = message.notification?.android;
       if (notification != null && android != null) {
-        print("notification received");
-        var a = widget.prefs.getInt("total_receive_notifications");
-        print(a);
+        var total = widget.prefs.getInt("total_receive_notifications");
+        if (total == null)
+          widget.prefs.setInt("total_receive_notifications", 0);
+        print(total);
         widget.prefs.setInt("total_receive_notifications",
             widget.prefs.getInt('total_receive_notifications')! + 1);
-        _addBadge();
+        Provider.of<NotificationsTotal>(context, listen: false)
+            .setTotal(widget.prefs.getInt('total_receive_notifications')!);
         print(widget.prefs.getInt("total_receive_notifications"));
         flutterLocalNotificationsPlugin.show(
           message.data.hashCode,
@@ -129,7 +164,6 @@ class _MyAppState extends State<MyApp> {
             ),
           ),
         );
-
       }
     });
     super.initState();

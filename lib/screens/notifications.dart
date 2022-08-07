@@ -62,8 +62,8 @@ class NotificationsPage extends StatelessWidget {
             } else {
               return Center(
                   child: CircularProgressIndicator(
-                      valueColor:
-                          AlwaysStoppedAnimation<Color>(Color(CommonColors.SECONDRY_COLOR))));
+                      valueColor: AlwaysStoppedAnimation<Color>(
+                          Color(CommonColors.SECONDRY_COLOR))));
             }
           },
         ));

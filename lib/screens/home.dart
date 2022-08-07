@@ -1,17 +1,19 @@
+import 'package:aidp_app/models/notificationTotal.dart';
 import 'package:aidp_app/screens/notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app_badger/flutter_app_badger.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import '../constants/colors.dart';
 import '../constants/url.dart';
 import '../models/webPage.dart';
-import '../utils/helpers.dart';
 import '../utils/service.dart';
 import '../widgets/banner.dart';
 import '../widgets/snackbar.dart';
 
 class HomePage extends StatefulWidget {
+
   SharedPreferences prefs;
   HomePage({Key? key, required this.prefs}) : super(key: key);
 
@@ -20,6 +22,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  late double swidth;
+  late double sheight;
   late WebViewController controller;
   bool openDrawer = false;
   Color drawerIcon = Colors.white;
@@ -41,23 +45,25 @@ class _HomePageState extends State<HomePage> {
     WebPage(name: "MEDIA WALL", link: BASE_URL + "media-wall.php"),
   ];
 
-  ShowBanners() async {
+  ShowBanners(double height, double width) async {
     final prefs = await SharedPreferences.getInstance();
 
     Map? adv = await Service.getbannerData(MyApplicationUrl.advertisement);
     Map? news = await Service.getbannerData(MyApplicationUrl.news);
-    if (prefs.getBool('news_displayed') != true) {
-      await prefs.setBool('news_displayed', true);
-      if (news != null) {
-        ScaffoldMessenger.of(context).showMaterialBanner(
-            CustomizedBanner(context, news["link"], news["foto"]));
-      }
-    }
     if (prefs.getBool('ad_displayed') != true) {
       await prefs.setBool('ad_displayed', true);
       if (adv != null) {
+         ScaffoldMessenger.of(context).showMaterialBanner(
+         CustomizedBanner(context, adv["link"], adv["foto"], height*0.25, width));
+
+      }
+    }
+    if (prefs.getBool('news_displayed') != true) {
+      await prefs.setBool('news_displayed', true);
+      if (news != null) {
         ScaffoldMessenger.of(context).showSnackBar(
-            CustomizedSnackbar(context, adv["link"], adv["foto"]));
+            CustomizedSnackbar(context, news["link"], news["foto"],height*0.4,width)
+        );
       }
     }
   }
@@ -65,15 +71,14 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     Future.delayed(const Duration(milliseconds: 3000), () {
-      ShowBanners();
+      double screenHeight = MediaQuery.of(context).size.height;
+      double screenWidth = MediaQuery.of(context).size.width;
+      ShowBanners(screenHeight,screenWidth);
     });
 
     super.initState();
   }
 
-  void _removeBadge() {
-    FlutterAppBadger.removeBadge();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -85,13 +90,14 @@ class _HomePageState extends State<HomePage> {
           ;
         },
         onEndDrawerChanged: (isOpened) {
-          isOpened
-              ? setState(() {
-                  notificationIcon = Color(CommonColors.SECONDRY_COLOR);
-                  widget.prefs.setInt("total_receive_notifications", 0);
-                  _removeBadge();
-                })
-              : setState(() => notificationIcon = Colors.white);
+          if (isOpened) {
+            widget.prefs.setInt("total_receive_notifications", 0);
+            Provider.of<NotificationsTotal>(context, listen: false).setTotal(0);
+            setState(() {
+              notificationIcon = Color(CommonColors.SECONDRY_COLOR);
+            });
+          } else
+            setState(() => notificationIcon = Colors.white);
           ;
         },
         drawerScrimColor: Colors.transparent,
@@ -168,34 +174,39 @@ class _HomePageState extends State<HomePage> {
                     ),
                   );
                 }),
-                if (widget.prefs.getInt("total_receive_notifications") !=
-                        null &&
-                    widget.prefs.getInt("total_receive_notifications") != 0)
-                  new Positioned(
-                    top: 10,
-                    right: 5,
-                    child: new Container(
-                      padding: EdgeInsets.all(1),
-                      decoration: new BoxDecoration(
-                        color: Colors.red,
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      constraints: BoxConstraints(
-                        minWidth: 16,
-                        minHeight: 16,
-                      ),
-                      child: new Text(
-                        widget.prefs
-                            .getInt("total_receive_notifications")
-                            .toString(),
-                        style: new TextStyle(
-                          color: Colors.white,
-                          fontSize: 14,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                  )
+                Consumer<NotificationsTotal>(
+                  builder: (BuildContext context, value, Widget? child) {
+                    return new Positioned(
+                        top: 10,
+                        right: 5,
+                        child: (widget.prefs.getInt(
+                                        "total_receive_notifications") !=
+                                    null &&
+                                widget.prefs.getInt(
+                                        "total_receive_notifications") !=
+                                    0)
+                            ? new Container(
+                                padding: EdgeInsets.all(1),
+                                decoration: new BoxDecoration(
+                                  color: Colors.red,
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                constraints: BoxConstraints(
+                                  minWidth: 16,
+                                  minHeight: 16,
+                                ),
+                                child: new Text(
+                                  value.total.toString(),
+                                  style: new TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 14,
+                                  ),
+                                  textAlign: TextAlign.center,
+                                ),
+                              )
+                            : Container());
+                  },
+                )
               ])
             ],
             title: Container(
