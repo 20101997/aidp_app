@@ -3,12 +3,11 @@ import 'dart:io';
 import 'package:aidp_app/constants/colors.dart';
 import 'package:aidp_app/screens/home.dart';
 import 'package:aidp_app/utils/service.dart';
-import 'package:aidp_app/widgets/snackbar.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app_badger/flutter_app_badger.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:overlay_support/overlay_support.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shared_preferences_android/shared_preferences_android.dart';
@@ -99,32 +98,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
-  /* @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-    switch (state) {
-      case AppLifecycleState.resumed:
-        setState(() {
-        });
-       // Provider.of<NotificationsTotal>(context, listen: false).setTotal(10);
-        print(widget.prefs.getInt("total_receive_notifications"));
-        print('app resumed');
-        break;
-      case AppLifecycleState.inactive:
-        print('app inactive');
-        break;
-      case AppLifecycleState.paused:
-        print('app paused');
-        break;
-      case AppLifecycleState.detached:
-        print('app detached');
-        break;
-    }
-  }
-  @override
-  void dispose() {
-    WidgetsBinding.instance.removeObserver(this);
-    super.dispose();
-  }*/
   @override
   void initState() {
     WidgetsBinding.instance.addObserver(this);
@@ -172,15 +145,17 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData(
-          appBarTheme: AppBarTheme(
-        color: Color(CommonColors.PRIMARY_COLOR),
-      )),
-      title: 'CONGRESSO NAZIONALE AIDP',
-      debugShowCheckedModeBanner: false,
-      home: HomePage(
-        prefs: widget.prefs,
+    return OverlaySupport.global(
+      child: MaterialApp(
+        theme: ThemeData(
+            appBarTheme: AppBarTheme(
+          color: Color(CommonColors.PRIMARY_COLOR),
+        )),
+        title: 'CONGRESSO NAZIONALE AIDP',
+        debugShowCheckedModeBanner: false,
+        home: HomePage(
+          prefs: widget.prefs,
+        ),
       ),
     );
   }

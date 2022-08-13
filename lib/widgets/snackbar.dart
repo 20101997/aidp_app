@@ -13,6 +13,7 @@ SnackBar CustomizedSnackbar(BuildContext context, String? link, String? image,do
         alignment: AlignmentDirectional.topEnd,
         children: [
           GestureDetector(
+            onTap: () => Helper.goToLink(link!),
             child: Container(
             child:
             Image.network(

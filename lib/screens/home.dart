@@ -1,10 +1,13 @@
 import 'package:aidp_app/models/notificationTotal.dart';
 import 'package:aidp_app/screens/notifications.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app_badger/flutter_app_badger.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
+import 'package:overlay_support/overlay_support.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:webview_flutter/webview_flutter.dart';
+
 import '../constants/colors.dart';
 import '../constants/url.dart';
 import '../models/webPage.dart';
@@ -22,8 +25,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  late double swidth;
-  late double sheight;
   late WebViewController controller;
   bool openDrawer = false;
   Color drawerIcon = Colors.white;
@@ -44,6 +45,7 @@ class _HomePageState extends State<HomePage> {
     WebPage(name: "PARTNER", link: BASE_URL + "/index-2022.php#slide7"),
     WebPage(name: "MEDIA WALL", link: BASE_URL + "media-wall.php"),
   ];
+  bool hasInternet = false;
 
   ShowBanners(double height, double width) async {
     final prefs = await SharedPreferences.getInstance();
@@ -164,8 +166,15 @@ class _HomePageState extends State<HomePage> {
               new Stack(children: <Widget>[
                 Builder(builder: (context) {
                   return IconButton(
-                    onPressed: () {
+                    onPressed: () async{
+                      hasInternet = await InternetConnectionChecker().hasConnection;
+                      if(hasInternet)
                       Scaffold.of(context).openEndDrawer();
+                      else{
+                        showSimpleNotification(
+                            Text("No internet connection"),
+                            background: Colors.red);
+                      }
                     },
                     icon: Icon(
                       Icons.notifications,
@@ -213,8 +222,6 @@ class _HomePageState extends State<HomePage> {
               width: 120,
               child: Image.asset(
                 'assets/logo congresso-2022-03.png',
-                //  height: 100,
-                //  width: 100,
                 fit: BoxFit.cover,
                 height: 65,
               ),
@@ -223,7 +230,18 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
         body: Scaffold(
-          body: WebView(
+          body: !hasInternet ? Center(child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text("No Internet connection"),
+                Icon(
+                  Icons.wifi_off,
+                  size: 35,
+                  color: Color(CommonColors.PRIMARY_COLOR),
+                ),
+
+            ],
+          )) : WebView(
               initialUrl: webUrl,
               javascriptMode: JavascriptMode.unrestricted,
               onWebViewCreated: (WebViewController webViewController) {
