@@ -230,18 +230,7 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
         body: Scaffold(
-          body: !hasInternet ? Center(child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text("No Internet connection"),
-                Icon(
-                  Icons.wifi_off,
-                  size: 35,
-                  color: Color(CommonColors.PRIMARY_COLOR),
-                ),
-
-            ],
-          )) : WebView(
+          body:WebView(
               initialUrl: webUrl,
               javascriptMode: JavascriptMode.unrestricted,
               onWebViewCreated: (WebViewController webViewController) {
