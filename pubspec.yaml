@@ -64,7 +64,15 @@ flutter-icons:
   android: true
   ios: true
 flutter_native_splash:
-  image: "assets/logosplash.png"
+  # background_image_ios: "assets/launch_image.png"
+  background_image: "assets/launchimageresized.png"
+  # color: "#42a5f5"
+  # image: "assets/launch_image.png"
+  ios: true
+  android: false
+  ios_content_mode: center
+  # fullscreen: true never use this its a trap lags the shit out of it
+
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
