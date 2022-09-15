@@ -30,21 +30,6 @@ class _HomePageState extends State<HomePage> {
   Color drawerIcon = Colors.white;
   Color notificationIcon = Colors.white;
   String webUrl = BASE_URL;
-  List<WebPage> webPages = [
-    WebPage(name: "HOME", link: BASE_URL),
-    WebPage(name: "AGENDA", link: BASE_URL + "lagenda.php"),
-    WebPage(name: "PROTAGONISTI", link: BASE_URL + "i-protagonisti.php"),
-    WebPage(
-        name: "LOCATION & ACCOMODATION", link: BASE_URL + "la-location.php"),
-    WebPage(
-        name: "TAPPE PRE CONGRESSUALI",
-        link: BASE_URL + "tappe-pre-congressuali.php"),
-    WebPage(
-        name: "PROGRAMMA ACCOMPAGNATORI",
-        link: BASE_URL + "programma-accompagnatori.php"),
-    WebPage(name: "PARTNER", link: BASE_URL + "/index-2022.php#slide7"),
-    WebPage(name: "MEDIA WALL", link: BASE_URL + "media-wall.php"),
-  ];
   bool hasInternet = false;
 
   ShowBanners(double height, double width) async {
