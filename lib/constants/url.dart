@@ -23,5 +23,6 @@ List<WebPage> webPages = [
   WebPage(name: "FUORICONGRESSO", link: BASE_URL + "fuoricongresso.php"),
   WebPage(name: "INFO & UTILITIES", link: BASE_URL + "info.php"),
   WebPage(name: "BOOK", link: BASE_URL + "book.php"),
+  WebPage(name: "MEDIA WALL", link: BASE_URL + "media-wall.php"),
 
 ];
