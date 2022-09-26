@@ -16,6 +16,11 @@ class NotificationsPage extends StatelessWidget {
           future: Service.getNotificationList(),
           builder: (BuildContext context, AsyncSnapshot snapshot) {
             if (snapshot.hasData) {
+              if(snapshot.data.length ==0)
+                  return Center(child: Text("Non ci sono notifiche",style: TextStyle(
+                      color: Color(CommonColors.SECONDRY_COLOR),
+                      fontSize: 20,
+                      fontWeight: FontWeight.w500),));
               return ListView.separated(
                 scrollDirection: Axis.vertical,
                 shrinkWrap: true,
