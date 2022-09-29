@@ -40,6 +40,10 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
         //      one that already exists in example app.
         icon: 'launch_background',
       ),
+      iOS: IOSNotificationDetails(
+        threadIdentifier: "thread1",
+      )
+
     ),
   );
 } 
@@ -65,10 +69,23 @@ void main() async {
   ///
   /// We use this channel in the `AndroidManifest.xml` file to override the
   /// default FCM channel to enable heads up notifications.
-  await flutterLocalNotificationsPlugin
-      .resolvePlatformSpecificImplementation<
-          AndroidFlutterLocalNotificationsPlugin>()
-      ?.createNotificationChannel(channel);
+
+  if (Platform.isAndroid) {
+    await flutterLocalNotificationsPlugin
+        .resolvePlatformSpecificImplementation<
+        AndroidFlutterLocalNotificationsPlugin>()
+        ?.createNotificationChannel(channel);
+  }
+  if (Platform.isIOS) {
+    await flutterLocalNotificationsPlugin
+        .resolvePlatformSpecificImplementation<
+        IOSFlutterLocalNotificationsPlugin>()
+        ?.requestPermissions(
+      alert: true,
+      badge: true,
+      sound: true,
+    );
+  }
 
   await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
     alert: true,
@@ -102,12 +119,21 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   void initState() {
     WidgetsBinding.instance.addObserver(this);
     Service.subscribeTonotifications();
+    void onDidReceiveLocalNotification(int id, String? title, String? body, String? payload) {
+      print('id $id');
+    }
 
-    var initializationSettingsAndroid =
-        const AndroidInitializationSettings('@mipmap/ic_launcher');
-    var initializationSettings =
-        InitializationSettings(android: initializationSettingsAndroid);
+    var initializationSettingsAndroid = const AndroidInitializationSettings('@mipmap/ic_launcher');
+    final IOSInitializationSettings initializationSettingsIOS =
+    IOSInitializationSettings(
+        requestSoundPermission: true,
+        requestBadgePermission: true,
+        requestAlertPermission: true,
+        onDidReceiveLocalNotification: onDidReceiveLocalNotification);
+
+    var initializationSettings = InitializationSettings(android: initializationSettingsAndroid, iOS: initializationSettingsIOS);
     flutterLocalNotificationsPlugin.initialize(initializationSettings);
+
 
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       RemoteNotification? notification = message.notification;
@@ -135,6 +161,9 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
               //      one that already exists in example app.
               icon: 'launch_background',
             ),
+              iOS: IOSNotificationDetails(
+                threadIdentifier: "thread1",
+              )
           ),
         );
       }
