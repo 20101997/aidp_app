@@ -32,21 +32,16 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
     message.data['title'],
     message.data['message'],
     NotificationDetails(
-      android: AndroidNotificationDetails(
-        channel.id,
-        channel.name,
-        // channel.description,
-        // TODO add a proper drawable resource to android, for now using
-        //      one that already exists in example app.
-        icon: 'launch_background',
-      ),
-      iOS: IOSNotificationDetails(
-        threadIdentifier: "thread1",
-      )
-
-    ),
+        android: AndroidNotificationDetails(
+          channel.id,
+          channel.name,
+          icon: 'launch_background',
+        ),
+        iOS: DarwinNotificationDetails(
+          threadIdentifier: "thread1",
+        )),
   );
-} 
+}
 
 const AndroidNotificationChannel channel = AndroidNotificationChannel(
   'high_importance_channel', // id
@@ -73,18 +68,18 @@ void main() async {
   if (Platform.isAndroid) {
     await flutterLocalNotificationsPlugin
         .resolvePlatformSpecificImplementation<
-        AndroidFlutterLocalNotificationsPlugin>()
+            AndroidFlutterLocalNotificationsPlugin>()
         ?.createNotificationChannel(channel);
   }
   if (Platform.isIOS) {
     await flutterLocalNotificationsPlugin
         .resolvePlatformSpecificImplementation<
-        IOSFlutterLocalNotificationsPlugin>()
+            IOSFlutterLocalNotificationsPlugin>()
         ?.requestPermissions(
-      alert: true,
-      badge: true,
-      sound: true,
-    );
+          alert: true,
+          badge: true,
+          sound: true,
+        );
   }
 
   await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
@@ -119,21 +114,24 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   void initState() {
     WidgetsBinding.instance.addObserver(this);
     Service.subscribeTonotifications();
-    void onDidReceiveLocalNotification(int id, String? title, String? body, String? payload) {
+    void onDidReceiveLocalNotification(
+        int id, String? title, String? body, String? payload) {
       print('id $id');
     }
 
-    var initializationSettingsAndroid = const AndroidInitializationSettings('@mipmap/ic_launcher');
-    final IOSInitializationSettings initializationSettingsIOS =
-    IOSInitializationSettings(
-        requestSoundPermission: true,
-        requestBadgePermission: true,
-        requestAlertPermission: true,
-        onDidReceiveLocalNotification: onDidReceiveLocalNotification);
+    var initializationSettingsAndroid =
+        const AndroidInitializationSettings('@mipmap/ic_launcher');
+    final DarwinInitializationSettings initializationSettingsDarwin =
+        DarwinInitializationSettings(
+            requestSoundPermission: true,
+            requestBadgePermission: true,
+            requestAlertPermission: true,
+            onDidReceiveLocalNotification: onDidReceiveLocalNotification);
 
-    var initializationSettings = InitializationSettings(android: initializationSettingsAndroid, iOS: initializationSettingsIOS);
+    var initializationSettings = InitializationSettings(
+        android: initializationSettingsAndroid,
+        iOS: initializationSettingsDarwin);
     flutterLocalNotificationsPlugin.initialize(initializationSettings);
-
 
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       RemoteNotification? notification = message.notification;
@@ -153,18 +151,17 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
           message.data['title'],
           message.data['message'],
           NotificationDetails(
-            android: AndroidNotificationDetails(
-              channel.id,
-              channel.name,
-              // channel.description,
-              // TODO add a proper drawable resource to android, for now using
-              //      one that already exists in example app.
-              icon: 'launch_background',
-            ),
-              iOS: IOSNotificationDetails(
+              android: AndroidNotificationDetails(
+                channel.id,
+                channel.name,
+                // channel.description,
+                // TODO add a proper drawable resource to android, for now using
+                //      one that already exists in example app.
+                icon: 'launch_background',
+              ),
+              iOS: DarwinNotificationDetails(
                 threadIdentifier: "thread1",
-              )
-          ),
+              )),
         );
       }
     });
