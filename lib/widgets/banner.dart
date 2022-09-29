@@ -35,6 +35,6 @@ MaterialBanner CustomizedBanner(BuildContext context, String? link, String? imag
           ),
         )
       ],
-    ),  actions: [],
+    ),  actions: [SizedBox.shrink()],
   );
 }
