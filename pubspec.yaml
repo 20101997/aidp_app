@@ -40,9 +40,9 @@ dependencies:
   #see https://github.com/flutter/flutter/issues/99176
   shared_preferences: ^2.0.15
   url_launcher: ^6.0.20
-  firebase_messaging: ^11.2.10
+  firebase_messaging: ^13.0.4
   firebase_core: ^1.13.1
-  flutter_local_notifications: ^9.4.0
+  flutter_local_notifications: ^11.0.1
   flutter_app_badger: ^1.4.0
   shared_preferences_android: ^2.0.12
   shared_preferences_ios: ^2.1.1
