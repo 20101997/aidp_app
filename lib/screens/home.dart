@@ -238,8 +238,7 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                   body: Container(
-                    child: Stack(
-                      children: [
+                    child:
                         WebView(
                             initialUrl: webUrl,
                             javascriptMode: JavascriptMode.unrestricted,
@@ -247,172 +246,158 @@ class _HomePageState extends State<HomePage> {
                                 (WebViewController webViewController) {
                               controller = webViewController;
                             }),
-                        Column(
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            BottomNavigationBar(
-                              currentIndex: _currentIndex,
-                              type: BottomNavigationBarType.fixed,
-                              backgroundColor: Color(CommonColors.Orangee),
-                              unselectedItemColor:
-                                  Color(CommonColors.SECONDRY_COLOR),
-                              selectedItemColor:
-                                  webUrl == bottomPages[_currentIndex].link ||
-                                          _currentIndex == 4
-                                      ? Colors.white
-                                      : Color(CommonColors.SECONDRY_COLOR),
-                              selectedFontSize: 8,
-                              unselectedFontSize: 8,
-                              elevation: 0,
-                              onTap: (int index) {
-                                print(index);
-                                setState(() {
-                                  _currentIndex = index;
-                                });
-                                if (index < 4) {
-                                  setState(() {
-                                    controller.loadUrl(bottomPages[index].link);
-                                    webUrl = bottomPages[index].link;
-                                  });
-                                }
-                              },
-                              selectedLabelStyle: TextStyle(
-                                overflow: TextOverflow.visible,
-                              ),
-                              unselectedLabelStyle: TextStyle(
-                                overflow: TextOverflow.visible,
-                              ),
-                              items: [
-                                BottomNavigationBarItem(
-                                  icon: Image.asset(
-                                    'assets/qr-code.png',
-                                    width: 40,
-                                    height: 40,
-                                    color: _currentIndex == 0 &&
-                                            webUrl == bottomPages[0].link
-                                        ? Colors.white
-                                        : Color(CommonColors.SECONDRY_COLOR),
-                                  ),
-                                  label: "BIGLIETTO",
-                                ),
-                                BottomNavigationBarItem(
-                                  icon: Image.asset('assets/yes.png',
-                                      width: 40,
-                                      height: 40,
-                                      color: _currentIndex == 1 &&
-                                              webUrl == bottomPages[1].link
-                                          ? Colors.white
-                                          : Color(CommonColors.SECONDRY_COLOR)),
-                                  label: "AIDP AWARD",
-                                ),
-                                BottomNavigationBarItem(
-                                  icon: Image.asset('assets/check-list.png',
-                                      width: 40,
-                                      height: 40,
-                                      color: _currentIndex == 2 &&
-                                              webUrl == bottomPages[2].link
-                                          ? Colors.white
-                                          : Color(CommonColors.SECONDRY_COLOR)),
-                                  label: "SESSIONI",
-                                ),
-                                BottomNavigationBarItem(
-                                  icon: Image.asset('assets/teamwork.png',
-                                      width: 40,
-                                      height: 40,
-                                      color: _currentIndex == 3 &&
-                                              webUrl == bottomPages[3].link
-                                          ? Colors.white
-                                          : Color(CommonColors.SECONDRY_COLOR)),
-                                  label: "ACCOMPAGNATORI",
-                                ),
-                                BottomNavigationBarItem(
-                                  icon: PopupMenuButton(
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(15.0))),
-                                    color: Color(CommonColors.PRIMARY_COLOR),
-                                    icon: Image.asset('assets/masculine-user.png',
-                                        width: 40,
-                                        height: 40,
-                                        color: _currentIndex == 4
-                                            ? Colors.white
-                                            : Color(CommonColors.SECONDRY_COLOR)),
-                                    itemBuilder: (_) => <PopupMenuItem<String>>[
-                                      PopupMenuItem<String>(
-                                          onTap: () {
-                                            setState(() {
-                                              _currentIndex = 4;
-                                              controller
-                                                  .loadUrl(bottomPages[4].link);
-                                              webUrl = bottomPages[4].link;
-                                            });
-                                          },
-                                          child: Text(bottomPages[4].name,
-                                              style: TextStyle(
-                                                  fontSize: 16,
-                                                  fontWeight: FontWeight.bold,
-                                                  color: bottomPages[4].link ==
-                                                          webUrl
-                                                      ? Colors.white
-                                                      : Color(CommonColors
-                                                          .SECONDRY_COLOR))),
-                                          value: ''),
-                                      PopupMenuItem<String>(
-                                          onTap: () {
-                                            setState(() {
-                                              _currentIndex = 4;
-                                              controller
-                                                  .loadUrl(bottomPages[5].link);
-                                              webUrl = bottomPages[5].link;
-                                            });
-                                          },
-                                          child: Text(bottomPages[5].name,
-                                              style: TextStyle(
-                                                  fontSize: 16,
-                                                  fontWeight: FontWeight.bold,
-                                                  color: bottomPages[5].link ==
-                                                          webUrl
-                                                      ? Colors.white
-                                                      : Color(CommonColors
-                                                          .SECONDRY_COLOR))),
-                                          value: ''),
-                                      PopupMenuItem<String>(
-                                          onTap: () {
-                                            setState(() {
-                                              _currentIndex = 4;
-                                              controller
-                                                  .loadUrl(bottomPages[6].link);
-                                              webUrl = bottomPages[6].link;
-                                            });
-                                          },
-                                          child: Text(bottomPages[6].name,
-                                              style: TextStyle(
-                                                  fontSize: 16,
-                                                  fontWeight: FontWeight.bold,
-                                                  color: bottomPages[6].link ==
-                                                          webUrl
-                                                      ? Colors.white
-                                                      : Color(CommonColors
-                                                          .SECONDRY_COLOR))),
-                                          value: ''),
-                                    ],
-                                  ),
-                                  label: "UTENTE",
-                                ),
-                              ],
-                            ),
-                          ],
-                        )
-                      ],
-                    ),
                   ),
                 ),
               ),
             ),
             Positioned(
                 top: 0,
-                child:SocialMediaBar())
+                child:SocialMediaBar()),
+            Column(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                BottomNavigationBar(
+                  currentIndex: _currentIndex,
+                  type: BottomNavigationBarType.fixed,
+                  backgroundColor: Color(CommonColors.Orangee),
+                  unselectedItemColor: Color(CommonColors.SECONDRY_COLOR),
+                  selectedItemColor: webUrl == bottomPages[_currentIndex].link ||
+                      _currentIndex == 4
+                      ? Colors.white
+                      : Color(CommonColors.SECONDRY_COLOR),
+                  selectedFontSize: 8,
+                  unselectedFontSize: 8,
+                  elevation: 0,
+                  onTap: (int index) {
+                    print(index);
+                    setState(() {
+                      _currentIndex = index;
+                    });
+                    if (index < 4) {
+                      setState(() {
+                        controller.loadUrl(bottomPages[index].link);
+                        webUrl = bottomPages[index].link;
+                      });
+                    }
+                  },
+                  selectedLabelStyle: TextStyle(
+                    overflow: TextOverflow.visible,
+                  ),
+                  unselectedLabelStyle: TextStyle(
+                    overflow: TextOverflow.visible,
+                  ),
+                  items: [
+                    BottomNavigationBarItem(
+                      icon: Image.asset(
+                        'assets/qr-code.png',
+                        width: 40,
+                        height: 40,
+                        color: _currentIndex == 0 && webUrl == bottomPages[0].link
+                            ? Colors.white
+                            : Color(CommonColors.SECONDRY_COLOR),
+                      ),
+                      label: "BIGLIETTO",
+                    ),
+                    BottomNavigationBarItem(
+                      icon: Image.asset('assets/yes.png',
+                          width: 40,
+                          height: 40,
+                          color:
+                          _currentIndex == 1 && webUrl == bottomPages[1].link
+                              ? Colors.white
+                              : Color(CommonColors.SECONDRY_COLOR)),
+                      label: "AIDP AWARD",
+                    ),
+                    BottomNavigationBarItem(
+                      icon: Image.asset('assets/check-list.png',
+                          width: 40,
+                          height: 40,
+                          color:
+                          _currentIndex == 2 && webUrl == bottomPages[2].link
+                              ? Colors.white
+                              : Color(CommonColors.SECONDRY_COLOR)),
+                      label: "SESSIONI",
+                    ),
+                    BottomNavigationBarItem(
+                      icon: Image.asset('assets/teamwork.png',
+                          width: 40,
+                          height: 40,
+                          color:
+                          _currentIndex == 3 && webUrl == bottomPages[3].link
+                              ? Colors.white
+                              : Color(CommonColors.SECONDRY_COLOR)),
+                      label: "ACCOMPAGNATORI",
+                    ),
+                    BottomNavigationBarItem(
+                      icon: PopupMenuButton(
+                        shape: RoundedRectangleBorder(
+                            borderRadius:
+                            BorderRadius.all(Radius.circular(15.0))),
+                        color: Color(CommonColors.PRIMARY_COLOR),
+                        icon: Image.asset('assets/masculine-user.png',
+                            width: 40,
+                            height: 40,
+                            color: _currentIndex == 4
+                                ? Colors.white
+                                : Color(CommonColors.SECONDRY_COLOR)),
+                        itemBuilder: (_) => <PopupMenuItem<String>>[
+                          PopupMenuItem<String>(
+                              onTap: () {
+                                setState(() {
+                                  _currentIndex = 4;
+                                  controller.loadUrl(bottomPages[4].link);
+                                  webUrl = bottomPages[4].link;
+                                });
+                              },
+                              child: Text(bottomPages[4].name,
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                      color: bottomPages[4].link == webUrl
+                                          ? Colors.white
+                                          : Color(CommonColors.SECONDRY_COLOR))),
+                              value: ''),
+                          PopupMenuItem<String>(
+                              onTap: () {
+                                setState(() {
+                                  _currentIndex = 4;
+                                  controller.loadUrl(bottomPages[5].link);
+                                  webUrl = bottomPages[5].link;
+                                });
+                              },
+                              child: Text(bottomPages[5].name,
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                      color: bottomPages[5].link == webUrl
+                                          ? Colors.white
+                                          : Color(CommonColors.SECONDRY_COLOR))),
+                              value: ''),
+                          PopupMenuItem<String>(
+                              onTap: () {
+                                setState(() {
+                                  _currentIndex = 4;
+                                  controller.loadUrl(bottomPages[6].link);
+                                  webUrl = bottomPages[6].link;
+                                });
+                              },
+                              child: Text(bottomPages[6].name,
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                      color: bottomPages[6].link == webUrl
+                                          ? Colors.white
+                                          : Color(CommonColors.SECONDRY_COLOR))),
+                              value: ''),
+                        ],
+                      ),
+                      label: "UTENTE",
+                    ),
+                  ],
+                ),
+              ],
+            )
           ],
 
     ),
