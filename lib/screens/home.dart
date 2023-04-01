@@ -103,7 +103,7 @@ class _HomePageState extends State<HomePage> {
                   },
                   drawerScrimColor: Colors.transparent,
                   endDrawer: Padding(
-                    padding: EdgeInsets.fromLTRB(0, 80, 0, 80),
+                    padding: EdgeInsets.fromLTRB(0, 80, 0, MediaQuery.of(context).size.height / 4),
                     child: Drawer(
                         elevation: 0,
                         width: MediaQuery.of(context).size.width,
