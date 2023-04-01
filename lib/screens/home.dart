@@ -70,14 +70,16 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return
        Scaffold(
+         backgroundColor: Color(CommonColors.Orangee) ,
          body: Stack(
           children: [
             Transform.translate(
-              offset: Offset(0, kToolbarHeight - 8),
+              offset: Offset(0, kToolbarHeight+ 8),
               child: Container(
                 height:
-                    MediaQuery.of(context).size.height + kToolbarHeight - (110),
+                    MediaQuery.of(context).size.height + kToolbarHeight,
                 child: Scaffold(
+                  backgroundColor: Color(CommonColors.PRIMARY_COLOR) ,
                   onDrawerChanged: (isOpened) {
                     isOpened
                         ? setState(
