@@ -270,7 +270,6 @@ class _HomePageState extends State<HomePage> {
                   unselectedFontSize: 8,
                   elevation: 0,
                   onTap: (int index) {
-                    print(index);
                     setState(() {
                       _currentIndex = index;
                     });
