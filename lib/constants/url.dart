@@ -14,7 +14,7 @@ List<WebPage> webPages = [
   WebPage(name: "HOME", link: BASE_URL),
   WebPage(name: "AGENDA", link: BASE_URL + "agenda"),
   WebPage(name: "PROTAGONISTI", link: BASE_URL + "protagonisti"),
-  WebPage(name: "PARTNER & SPONSOR", link:  "https://www.aidp.it/partner/partner-e-sponsor-2023.php"),
+  WebPage(name: "PARTNER & SPONSOR", link:  "https://www.aidp.it/portale/partner/partner-e-sponsor-app.php"),
   WebPage(name: "MAPPA", link: BASE_URL + "mappa"),
   WebPage(name: "SOSTENIBILITÀ", link: BASE_URL +"sostenibilita"),
   WebPage(name: "MOBILITÀ", link: BASE_URL + "mobilita"),
