@@ -32,7 +32,7 @@ class NotificationsPage extends StatelessWidget {
                       borderRadius: BorderRadius.circular(5),
                       color: Color(CommonColors.PRIMARY_COLOR),
                       border: Border.all(
-                          color: Color(CommonColors.SECONDRY_COLOR), width: 1),
+                          color: Color(CommonColors.SECONDRY_COLOR), width: 2),
                     ),
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),

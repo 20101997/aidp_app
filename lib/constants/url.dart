@@ -12,17 +12,27 @@ class MyApplicationUrl {
 
 List<WebPage> webPages = [
   WebPage(name: "HOME", link: BASE_URL),
-  WebPage(name: "AGENDA", link: BASE_URL + "lagenda.php"),
-  WebPage(name: "PROTAGONISTI", link: BASE_URL + "i-protagonisti.php"),
-  WebPage(name: "PARTNER & SPONSOR", link:  "https://www.aidp.it/portale/partner/"),
-  WebPage(name: "MAPPA", link: BASE_URL + "mappa.php"),
-  WebPage(name: "SOSTENIBILITÀ", link: BASE_URL +"sostenibilita.php"),
-  WebPage(name: "MOBILITÀ", link: BASE_URL + "mobilita.php"),
-  WebPage(name: "TERRITORIO", link: BASE_URL + "territorio.php"),
-  WebPage(name: "CONCORSO", link: BASE_URL +"concorso.php"),
-  WebPage(name: "FUORICONGRESSO", link: BASE_URL + "fuoricongresso.php"),
-  WebPage(name: "INFO & UTILITIES", link: BASE_URL + "info.php"),
-  WebPage(name: "BOOK", link: BASE_URL + "book.php"),
-  WebPage(name: "MEDIA WALL", link: BASE_URL + "media-wall.php"),
+  WebPage(name: "AGENDA", link: BASE_URL + "agenda"),
+  WebPage(name: "PROTAGONISTI", link: BASE_URL + "protagonisti"),
+  WebPage(name: "PARTNER & SPONSOR", link:  "https://www.aidp.it/portale/partner/partner-e-sponsor-app.php"),
+  WebPage(name: "MAPPA", link: BASE_URL + "mappa"),
+  WebPage(name: "SOSTENIBILITÀ", link: BASE_URL +"sostenibilita"),
+  WebPage(name: "MOBILITÀ", link: BASE_URL + "mobilita"),
+  WebPage(name: "TERRITORIO", link: BASE_URL + "territorio"),
+  WebPage(name: "FUORICONGRESSO", link: BASE_URL + "fuoricongresso"),
+  WebPage(name: "INFO & UTILITIES", link: BASE_URL + "info"),
+  WebPage(name: "BOOK", link: BASE_URL + "book"),
+  WebPage(name: "MEDIA WALL", link: BASE_URL + "media-wall"),
+
+];
+
+List<WebPage> bottomPages = [
+  WebPage(name: "BIGLIETTO", link: BASE_URL + "area-riservata/biglietto"),
+  WebPage(name: "AIDP AWARD", link: BASE_URL + "area-riservata/award"),
+  WebPage(name: "SESSIONI", link: BASE_URL + "area-riservata/sessioni"),
+  WebPage(name: "ACCOMPAGNATORI", link: BASE_URL + "area-riservata/accompagnatori"),
+  WebPage(name: "RIEPILOGO DATI", link: BASE_URL + "area-riservata/riepilogo-dati"),
+  WebPage(name: "FATTURAZIONE ", link: BASE_URL + "area-riservata/riepilogo-fattura"),
+  WebPage(name: "PAGAMENTI  ", link: BASE_URL + "area-riservata/riepilogo-pagamenti"),
 
 ];
