@@ -18,7 +18,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 3.1.0+3
 
 environment:
-  sdk: ">=2.17.5 <3.0.0"
+  sdk: ">=2.19.0 <3.0.0"
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -34,20 +34,20 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
-  webview_flutter: ^3.0.4
-  badges: ^2.0.3
+  webview_flutter: ^4.0.7
+  badges: ^3.1.1
   http: ^0.13.4
   #see https://github.com/flutter/flutter/issues/99176
   shared_preferences: ^2.0.15
   url_launcher: ^6.0.20
-  firebase_messaging: ^13.0.4
-  firebase_core: ^1.13.1
-  flutter_local_notifications: ^11.0.1
+  firebase_messaging: ^14.4.0
+  firebase_core: ^2.9.0
+  flutter_local_notifications: ^13.0.0
   flutter_app_badger: ^1.4.0
   shared_preferences_android: ^2.0.12
   shared_preferences_ios: ^2.1.1
   provider: ^6.0.2
-  internet_connection_checker: ^0.0.1+4
+  internet_connection_checker: ^1.0.0+1
   overlay_support: ^2.0.1
   font_awesome_flutter: ^10.4.0
 
@@ -57,7 +57,7 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_launcher_icons: ^0.9.3
+  flutter_launcher_icons: ^0.13.0
   flutter_native_splash: ^2.2.5
 
 flutter-icons:

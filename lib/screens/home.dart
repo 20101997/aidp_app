@@ -62,7 +62,7 @@ class _HomePageState extends State<HomePage> {
       double screenWidth = MediaQuery.of(context).size.width;
       ShowBanners(screenHeight, screenWidth);
     });
-
+initWebViewController();
     super.initState();
   }
 
@@ -123,7 +123,7 @@ class _HomePageState extends State<HomePage> {
                           return ListTile(
                               onTap: () {
                                 setState(() {
-                                  controller.loadUrl(webPages[i].link);
+                                  controller.loadRequest(Uri.parse(webPages[i].link));
                                   webUrl = webPages[i].link;
                                 });
                                 Scaffold.of(context).closeDrawer();
@@ -241,13 +241,16 @@ class _HomePageState extends State<HomePage> {
                   ),
                   body: Container(
                     child:
-                        WebView(
-                            initialUrl: webUrl,
-                            javascriptMode: JavascriptMode.unrestricted,
-                            onWebViewCreated:
-                                (WebViewController webViewController) {
-                              controller = webViewController;
-                            }),
+                        WebViewWidget(
+                          controller: controller,
+                            // initialUrl: webUrl,
+                            // javascriptMode: JavascriptMode.unrestricted,
+                            // onWebViewCreated:
+                            //     (WebViewController webViewController) {
+                            //   controller = webViewController;
+                            // },
+                            
+                            ),
                   ),
                 ),
               ),
@@ -277,7 +280,7 @@ class _HomePageState extends State<HomePage> {
                     });
                     if (index < 4) {
                       setState(() {
-                        controller.loadUrl(bottomPages[index].link);
+                        controller.loadRequest(Uri.parse(bottomPages[index].link));
                         webUrl = bottomPages[index].link;
                       });
                     }
@@ -347,7 +350,7 @@ class _HomePageState extends State<HomePage> {
                               onTap: () {
                                 setState(() {
                                   _currentIndex = 4;
-                                  controller.loadUrl(bottomPages[4].link);
+                                  controller.loadRequest(Uri.parse(bottomPages[4].link));
                                   webUrl = bottomPages[4].link;
                                 });
                               },
@@ -363,7 +366,7 @@ class _HomePageState extends State<HomePage> {
                               onTap: () {
                                 setState(() {
                                   _currentIndex = 4;
-                                  controller.loadUrl(bottomPages[5].link);
+                                  controller.loadRequest(Uri.parse(bottomPages[5].link));
                                   webUrl = bottomPages[5].link;
                                 });
                               },
@@ -379,7 +382,7 @@ class _HomePageState extends State<HomePage> {
                               onTap: () {
                                 setState(() {
                                   _currentIndex = 4;
-                                  controller.loadUrl(bottomPages[6].link);
+                                  controller.loadRequest(Uri.parse(bottomPages[6].link));
                                   webUrl = bottomPages[6].link;
                                 });
                               },
@@ -403,6 +406,15 @@ class _HomePageState extends State<HomePage> {
 
     ),
        );
+  }
+  
+  void initWebViewController() {
+controller = WebViewController()
+  ..setJavaScriptMode(JavaScriptMode.unrestricted)
+  ..setBackgroundColor(const Color(0x00000000))
+
+  ..loadRequest(Uri.parse(webUrl));
+
   }
 }
 
