@@ -29,7 +29,7 @@ List<WebPage> webPages = [
 List<WebPage> bottomPages = [
   WebPage(name: "BIGLIETTO", link: BASE_URL + "area-riservata/biglietto"),
   WebPage(name: "AIDP AWARD", link: BASE_URL + "area-riservata/award"),
-  WebPage(name: "SESSIONI", link: BASE_URL + "area-riservata/sessioni"),
+  WebPage(name: "LEARNING EXP", link: BASE_URL + "area-riservata/sessioni"),
   WebPage(name: "ACCOMPAGNATORI", link: BASE_URL + "area-riservata/accompagnatori"),
   WebPage(name: "RIEPILOGO DATI", link: BASE_URL + "area-riservata/riepilogo-dati"),
   WebPage(name: "FATTURAZIONE ", link: BASE_URL + "area-riservata/riepilogo-fattura"),

@@ -321,7 +321,7 @@ initWebViewController();
                           _currentIndex == 2 && webUrl == bottomPages[2].link
                               ? Colors.white
                               : Color(CommonColors.SECONDRY_COLOR)),
-                      label: "SESSIONI",
+                      label: "LEARNING EXP",
                     ),
                     BottomNavigationBarItem(
                       icon: Image.asset('assets/teamwork.png',
